@@ -19,13 +19,17 @@ class Timer {
     if (this.onStart) {
       this.onStart(this.timeRemaining);
     }
-    this.tick();
-    this.interval = setInterval(this.tick, 50);
-    this.startButton.disabled = true;
+    if (!running) {
+      this.tick();
+      this.interval = setInterval(this.tick, 50);
+      running = true;
+      this.startButton.disabled = true;
+    }
   };
 
   pause = () => {
     clearInterval(this.interval);
+    running = false;
     this.startButton.disabled = false;
   };
   durationInputChanged = () => {
